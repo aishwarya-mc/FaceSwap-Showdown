@@ -126,31 +126,37 @@ function App() {
     return () => camera.stop();
   }, [useCartier]);
 
-  return (
-    <div className="flex flex-col items-center justify-center h-screen bg-black space-y-4">
-      <div className="relative w-[640px] h-[480px]">
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          muted
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
-        />
-        <canvas
-          ref={canvasRef}
-          width={640}
-          height={480}
-          className="absolute top-0 left-0 w-full h-full z-10 pointer-events-none"
-        />
-      </div>
-      <button
-        onClick={() => setUseCartier((prev) => !prev)}
-        className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md transition"
-      >
-        Switch to {useCartier ? 'Regular Glasses' : 'Cartier Glasses'}
-      </button>
+return (
+  <div className="flex items-center justify-center h-screen bg-black">
+    {/* Player 1 */}
+    <div className="relative w-[640px] h-[480px] mx-4">
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        muted
+        className="absolute top-0 left-0 w-full h-full object-cover z-0 hidden"
+      />
+      <canvas
+        ref={canvasRef}
+        width={640}
+        height={480}
+        className="absolute top-0 left-0 z-10 pointer-events-none rounded-lg border-2 border-white"
+      />
     </div>
-  );
+
+    {/* Player 2 (mirrored feed) */}
+    <div className="relative w-[640px] h-[480px] mx-4">
+      <canvas
+        id="mirrorCanvas"
+        width={640}
+        height={480}
+        className="absolute top-0 left-0 z-10 pointer-events-none rounded-lg border-2 border-pink-500"
+      />
+    </div>
+  </div>
+);
+
 }
 
 export default App;
