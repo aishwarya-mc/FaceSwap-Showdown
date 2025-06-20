@@ -121,43 +121,43 @@ function App() {
         <div className="w-full h-full bg-white/10 backdrop-blur-2xl" />
       </div>
 
-      {/* Controls */}
-      <div className="z-20 flex flex-row items-center justify-center gap-10 mt-8 mb-4 w-full max-w-2xl mx-auto bg-white/30 backdrop-blur-2xl rounded-3xl shadow-2xl py-5 px-12 border border-white/30 drop-shadow-lg" style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.25)' }}>
-        {/* Glasses Toggle Switch */}
-        <div className="flex items-center gap-3">
-          <span className="text-white font-semibold text-base tracking-wide">Glasses</span>
-          <button
-            onClick={() => setGlassesOn((prev) => !prev)}
-            className={`w-14 h-7 flex items-center rounded-full p-1 duration-300 ease-in-out border-2 border-white/50 shadow-inner focus:outline-none focus:ring-2 focus:ring-pink-300 transition-all ${glassesOn ? 'bg-green-400/80' : 'bg-gray-400/60'} hover:scale-105`}
-            aria-label="Toggle Glasses"
-          >
-            <div
-              className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${glassesOn ? 'translate-x-7' : ''}`}
-            />
-          </button>
-        </div>
-        {/* Glasses Style Switch */}
-        <div className="flex items-center gap-3">
-          <span className="text-white font-semibold text-base tracking-wide">Style</span>
-          <button
-            onClick={() => setUseCartier((prev) => !prev)}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-yellow-400 text-white font-bold shadow-lg hover:scale-105 duration-200 border-2 border-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition-all"
-            aria-label="Switch Glasses Style"
-          >
-            {useCartier ? (
-              <>
-                <span>Cartier</span>
-                <span role="img" aria-label="Cartier">😎</span>
-              </>
-            ) : (
-              <>
-                <span>Default</span>
-                <span role="img" aria-label="Default">🤓</span>
-              </>
-            )}
-          </button>
-        </div>
-      </div>
+<div className="z-20 flex flex-row items-center justify-center gap-12 mt-8 mb-4 w-full max-w-2xl mx-auto bg-white/30 backdrop-blur-2xl rounded-3xl shadow-2xl py-6 px-12 border border-white/30 drop-shadow-lg" style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.25)' }}>
+  {/* Glasses Toggle Switch */}
+  <div className="flex items-center gap-4">
+    <span className="text-white font-semibold text-lg tracking-wide min-w-[80px]">Glasses</span>
+    <button
+      onClick={() => setGlassesOn((prev) => !prev)}
+      className={`w-16 h-8 flex items-center rounded-full p-1 duration-300 ease-in-out border-2 border-white/50 shadow-inner focus:outline-none focus:ring-2 focus:ring-pink-300 transition-all ${glassesOn ? 'bg-green-400/80' : 'bg-gray-400/60'} hover:scale-105`}
+      aria-label="Toggle Glasses"
+    >
+      <div
+        className={`bg-white w-7 h-7 rounded-full shadow-md transform duration-300 ease-in-out ${glassesOn ? 'translate-x-7' : ''}`}
+      />
+    </button>
+  </div>
+
+  {/* Glasses Style Switch */}
+  <div className="flex items-center gap-4">
+    <span className="text-white font-semibold text-lg tracking-wide min-w-[80px]">Style</span>
+    <button
+      onClick={() => setUseCartier((prev) => !prev)}
+      className="flex items-center justify-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-yellow-400 text-white font-bold shadow-lg hover:scale-105 duration-200 border-2 border-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition-all min-w-[140px]"
+      aria-label="Switch Glasses Style"
+    >
+      {useCartier ? (
+        <>
+          <span className="whitespace-nowrap">Cartier</span>
+          <span role="img" aria-label="Cartier">😎</span>
+        </>
+      ) : (
+        <>
+          <span className="whitespace-nowrap">Default</span>
+          <span role="img" aria-label="Default">🤓</span>
+        </>
+      )}
+    </button>
+  </div>
+</div>
 
       {/* Main Game Layout */}
       <div className="z-10 flex flex-row items-center justify-center gap-20 w-full max-w-6xl py-10">
