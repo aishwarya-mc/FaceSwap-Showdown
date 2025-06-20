@@ -4,6 +4,8 @@ import { Camera } from '@mediapipe/camera_utils';
 import mustacheImgSrc from './assets/overlays/mustache.png';
 import glassesImgSrc from './assets/overlays/glasses.png';
 import cartierImgSrc from './assets/overlays/cartiersunglass.png';
+import emojiSurprised from './assets/overlays/emoji_surprised.png';
+
 
 function App() {
   const videoRef = useRef(null);
@@ -59,13 +61,13 @@ function App() {
         ((leftMouth.x + rightMouth.x) / 2) * width - mustacheWidth / 2;
       const mustacheY = nose.y * height;
 
-      ctx.drawImage(
-        mustacheImg,
-        mustacheX,
-        mustacheY,
-        mustacheWidth,
-        mustacheHeight
-      );
+      // ctx.drawImage(
+      //   mustacheImg,
+      //   mustacheX,
+      //   mustacheY,
+      //   mustacheWidth,
+      //   mustacheHeight
+      // );
 
       // Glasses
       const leftEye = landmarks[33];
@@ -79,13 +81,13 @@ function App() {
         ((leftEye.x + rightEye.x) / 2) * width - glassesWidth / 2;
       const glassesY = eyeCenterY * height - glassesHeight / 2;
 
-      ctx.drawImage(
-        activeGlassesImg(),
-        glassesX,
-        glassesY,
-        glassesWidth,
-        glassesHeight
-      );
+      // ctx.drawImage(
+      //   activeGlassesImg(),
+      //   glassesX,
+      //   glassesY,
+      //   glassesWidth,
+      //   glassesHeight
+      // );
     };
 
     const drawResults = (results) => {
@@ -141,6 +143,16 @@ function App() {
         Toggle Glasses: {useCartier ? 'Cartier 😎' : 'Default 🤓'}
       </button>
 
+      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-40">
+      <img
+        src={emojiSurprised}
+        alt="Reference Face"
+        className="w-32 h-32 object-contain rounded-full border-4 border-yellow-400 shadow-xl bg-white"
+      />
+      <p className="text-white text-center mt-2 font-bold">Mimic this face!</p>
+      </div>
+
+
       <div className="flex items-center justify-center h-screen bg-black">
         {/* Player 1 */}
         <div className="relative w-[640px] h-[480px] mx-4">
@@ -149,7 +161,7 @@ function App() {
             autoPlay
             playsInline
             muted
-            className="absolute top-0 left-0 w-full h-full object-cover z-0 hidden"
+            className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-0"
           />
           <canvas
             ref={canvasRef}
