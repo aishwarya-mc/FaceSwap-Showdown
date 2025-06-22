@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.text-gradient {
+  background-image: linear-gradient(to right, #ff8a00, #e52e71);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

@@ -5,6 +5,8 @@ import mustacheImgSrc from './assets/overlays/mustache.png';
 import glassesImgSrc from './assets/overlays/glasses.png';
 import cartierImgSrc from './assets/overlays/cartiersunglass.png';
 import emojiSurprised from './assets/overlays/emoji_surprised.png';
+import './index.css';
+
 
 function App() {
   const videoRef = useRef(null);
@@ -115,13 +117,24 @@ function App() {
   }, [useCartier, glassesOn]);
 
   return (
+
+    // checking if tcss is wokring
+
+    //end
+
+
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-[#232526] via-[#414345] to-[#232526] relative overflow-hidden">
       {/* Glassmorphism background effect */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="w-full h-full bg-white/10 backdrop-blur-2xl" />
       </div>
 
-<div className="z-20 flex flex-row items-center justify-center gap-12 mt-8 mb-4 w-full max-w-2xl mx-auto bg-white/30 backdrop-blur-2xl rounded-3xl shadow-2xl py-6 px-12 border border-white/30 drop-shadow-lg" style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.25)' }}>
+<div className="z-50 flex flex-row items-center justify-center gap-5 mt-6 mb-10 w-full max-w-3xl mx-auto bg-black/40 rounded-2xl py-10 px-16 border-2 border-white shadow-2xl backdrop-blur-md">
+
+
+
+
+
   {/* Glasses Toggle Switch */}
   <div className="flex items-center gap-4">
     <span className="text-white font-semibold text-lg tracking-wide min-w-[80px]">Glasses</span>
