@@ -4,7 +4,8 @@ import { Camera } from '@mediapipe/camera_utils';
 import mustacheImgSrc from './assets/overlays/mustache.png';
 import glassesImgSrc from './assets/overlays/glasses.png';
 import cartierImgSrc from './assets/overlays/cartiersunglass.png';
-import emojiSurprised from './assets/overlays/emoji_surprised.png';
+import emojiSurprised from './assets/overlays/mr_bean.png';
+
 import './index.css';
 
 
@@ -193,15 +194,17 @@ function App() {
 
         {/* Reference Emoji (smaller, centered) */}
         <div className="flex flex-col items-center gap-2">
-          <div className="rounded-full bg-white/80 flex items-center justify-center" style={{ width: '1.2em', height: '1.2em', minWidth: '1.2em', minHeight: '1.2em' }}>
+          <div className="rounded-2xl bg-white/80 flex items-center justify-center p-3 shadow-lg">
             <img
               src={emojiSurprised}
               alt="Reference Face"
-              style={{ width: '1em', height: '1em', objectFit: 'contain', display: 'block' }}
+              className="w-32 h-32 object-contain rounded-xl"
             />
           </div>
-          <p className="text-white font-bold text-center text-xs mt-1 tracking-wide drop-shadow">Mimic this!</p>
+          <p className="text-white font-bold text-center text-base mt-2 tracking-wide drop-shadow">Mimic this!</p>
         </div>
+
+
 
         {/* Player 2 */}
         <div className="relative w-[420px] h-[315px] rounded-3xl overflow-hidden shadow-2xl border-2 border-pink-400/60 bg-white/10 backdrop-blur-lg drop-shadow-xl">
