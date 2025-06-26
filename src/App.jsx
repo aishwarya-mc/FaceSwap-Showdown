@@ -78,30 +78,56 @@ function App() {
       }
     };
 
-    const drawResults = (results) => {
-      const canvasCtx = canvasRef.current.getContext('2d');
-      const mirrorCtx = mirrorCanvasRef.current.getContext('2d');
-      const width = canvasRef.current.width;
-      const height = canvasRef.current.height;
-      canvasCtx.clearRect(0, 0, width, height);
-      mirrorCtx.clearRect(0, 0, width, height);
-      // Player 1
-      canvasCtx.save();
-      canvasCtx.drawImage(results.image, 0, 0, width, height);
-      if (results.multiFaceLandmarks?.length > 0) {
-        drawOverlays(canvasCtx, results.multiFaceLandmarks[0]);
-      }
-      canvasCtx.restore();
-      // Player 2 (mirrored)
-      mirrorCtx.save();
-      mirrorCtx.translate(width, 0);
-      mirrorCtx.scale(-1, 1);
-      mirrorCtx.drawImage(results.image, 0, 0, width, height);
-      if (results.multiFaceLandmarks?.length > 0) {
-        drawOverlays(mirrorCtx, results.multiFaceLandmarks[0]);
-      }
-      mirrorCtx.restore();
-    };
+const drawResults = (results) => {
+  const canvasCtx = canvasRef.current.getContext('2d');
+  const mirrorCtx = mirrorCanvasRef.current.getContext('2d');
+  const width = canvasRef.current.width;
+  const height = canvasRef.current.height;
+
+  canvasCtx.clearRect(0, 0, width, height);
+  mirrorCtx.clearRect(0, 0, width, height);
+
+  // Player 1
+  canvasCtx.save();
+  canvasCtx.drawImage(results.image, 0, 0, width, height);
+  if (results.multiFaceLandmarks?.length > 0) {
+    const landmarks = results.multiFaceLandmarks[0];
+
+    // ✅ STEP 1: Normalize landmark positions for Player 1
+    const normalizedLandmarks = normalizeLandmarks(landmarks);
+    console.log("Player 1 vector:", normalizedLandmarks);
+
+    drawOverlays(canvasCtx, landmarks);
+  }
+  canvasCtx.restore();
+
+  // Player 2 (mirrored)
+  mirrorCtx.save();
+  mirrorCtx.translate(width, 0);
+  mirrorCtx.scale(-1, 1);
+  mirrorCtx.drawImage(results.image, 0, 0, width, height);
+  if (results.multiFaceLandmarks?.length > 0) {
+    const landmarks = results.multiFaceLandmarks[0];
+
+    // ✅ (same face used, mirror mode — keep for symmetry, can refine later)
+    const normalizedLandmarks = normalizeLandmarks(landmarks);
+    console.log("Player 2 vector:", normalizedLandmarks);
+
+    drawOverlays(mirrorCtx, landmarks);
+  }
+  mirrorCtx.restore();
+};
+
+
+
+  function normalizeLandmarks(landmarks) {
+  const ref = landmarks[1]; // Nose tip
+  return landmarks.map(pt => ({
+    x: pt.x - ref.x,
+    y: pt.y - ref.y,
+  }));
+}
+
 
     const camera = new Camera(videoRef.current, {
       onFrame: async () => {
@@ -119,9 +145,6 @@ function App() {
 
   return (
 
-    // checking if tcss is wokring
-
-    //end
 
 
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-[#232526] via-[#414345] to-[#232526] relative overflow-hidden">
