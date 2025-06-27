@@ -5,7 +5,6 @@ import mustacheImgSrc from './assets/overlays/mustache.png';
 import glassesImgSrc from './assets/overlays/glasses.png';
 import cartierImgSrc from './assets/overlays/cartiersunglass.png';
 import emojiSurprised from './assets/overlays/mr_bean.png';
-
 import './index.css';
 
 
@@ -15,6 +14,7 @@ function App() {
   const mirrorCanvasRef = useRef(null);
   const [useCartier, setUseCartier] = useState(false);
   const [glassesOn, setGlassesOn] = useState(true);
+  const [similarityScore, setSimilarityScore] = useState(null);
 
   useEffect(() => {
     const faceMesh = new FaceMesh({
@@ -28,6 +28,54 @@ function App() {
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5,
     });
+
+    // Load and analyze Mr. Bean's face
+    const mrBeanImg = new Image();
+    mrBeanImg.crossOrigin = 'anonymous';
+    mrBeanImg.src = emojiSurprised;
+    
+    mrBeanImg.onload = async () => {
+      console.log("🟢 Mr. Bean image loaded, starting analysis...");
+      const tmpCanvas = document.createElement('canvas');
+      tmpCanvas.width = 420;
+      tmpCanvas.height = 315;
+      const tmpCtx = tmpCanvas.getContext('2d');
+      tmpCtx.drawImage(mrBeanImg, 0, 0, 420, 315);
+
+      const tmpFaceMesh = new FaceMesh({
+        locateFile: (file) =>
+          `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`,
+      });
+
+      tmpFaceMesh.setOptions({
+        maxNumFaces: 1,
+        refineLandmarks: true,
+        minDetectionConfidence: 0.5,
+        minTrackingConfidence: 0.5,
+      });
+
+      tmpFaceMesh.onResults((results) => {
+        if (results.multiFaceLandmarks?.length > 0) {
+          const mrBeanLandmarks = results.multiFaceLandmarks[0];
+          const normalized = normalizeLandmarks(mrBeanLandmarks);
+          console.log("🟣 Mr. Bean RAW coordinates:", mrBeanLandmarks);
+          console.log("🟣 Mr. Bean NORMALIZED vector:", normalized);
+          window.mrBeanVector = normalized;
+        } else {
+          console.warn("🟡 Mr. Bean face NOT detected in the image.");
+        }
+      });
+
+      try {
+        await tmpFaceMesh.send({ image: tmpCanvas });
+      } catch (error) {
+        console.error("❌ Error analyzing Mr. Bean:", error);
+      }
+    };
+
+    mrBeanImg.onerror = () => {
+      console.error("❌ Failed to load Mr. Bean image");
+    };
 
     const mustacheImg = new Image();
     mustacheImg.src = mustacheImgSrc;
@@ -198,22 +246,38 @@ const drawResults = (results) => {
 
       {/* Main Game Layout */}
       <div className="z-10 flex flex-row items-center justify-center gap-20 w-full max-w-6xl py-10">
-        {/* Player 1 */}
-        <div className="relative w-[420px] h-[315px] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/40 bg-white/10 backdrop-blur-lg drop-shadow-xl">
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            muted
-            className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-0"
-          />
-          <canvas
-            ref={canvasRef}
-            width={420}
-            height={315}
-            className="absolute top-0 left-0 z-10 pointer-events-none rounded-3xl"
-          />
-        </div>
+
+
+
+        <div className="flex flex-col items-center gap-2">
+  <span className="text-white font-bold text-lg tracking-wide drop-shadow">Player 1</span>
+  {similarityScore !== null && (
+    <span className="text-green-300 font-mono text-sm tracking-wider drop-shadow">
+      Score: {similarityScore.toFixed(3)}
+    </span>
+  )}
+
+  
+  <div className="relative w-[420px] h-[315px] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/40 bg-white/10 backdrop-blur-lg drop-shadow-xl">
+    <video
+      ref={videoRef}
+      autoPlay
+      playsInline
+      muted
+      className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-0"
+    />
+    <canvas
+      ref={canvasRef}
+      width={420}
+      height={315}
+      className="absolute top-0 left-0 z-10 pointer-events-none rounded-3xl"
+    />
+  </div>
+</div>
+
+
+
+
 
         {/* Reference Emoji (smaller, centered) */}
         <div className="flex flex-col items-center gap-2">
@@ -225,11 +289,21 @@ const drawResults = (results) => {
             />
           </div>
           <p className="text-white font-bold text-center text-base mt-2 tracking-wide drop-shadow">Mimic this!</p>
+                    {/* ✅ Display Similarity Score */}
+          {similarityScore && (
+            <p className="text-center mt-4 text-white text-lg font-semibold tracking-wide bg-gradient-to-r from-green-400 via-yellow-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
+              Similarity Score: {similarityScore}
+            </p>
+          )}
         </div>
 
 
 
-        {/* Player 2 */}
+      {/* Player 2 Block */}
+      <div className="flex flex-col items-center gap-3">
+        <p className="text-white font-semibold text-xl tracking-wide bg-gradient-to-r from-pink-500 to-yellow-400 px-6 py-1 rounded-full shadow-lg animate-pulse">
+          Player 2
+        </p>
         <div className="relative w-[420px] h-[315px] rounded-3xl overflow-hidden shadow-2xl border-2 border-pink-400/60 bg-white/10 backdrop-blur-lg drop-shadow-xl">
           <canvas
             ref={mirrorCanvasRef}
@@ -238,6 +312,10 @@ const drawResults = (results) => {
             className="absolute top-0 left-0 z-10 pointer-events-none rounded-3xl"
           />
         </div>
+      </div>
+
+
+
       </div>
 
       {/* Footer or credits (optional aesthetic) */}
