@@ -177,6 +177,29 @@ const drawResults = (results) => {
 }
 
 
+function computeCosineSimilarity(vec1, vec2) {
+  let dot = 0;
+  let normA = 0;
+  let normB = 0;
+
+  for (let i = 0; i < vec1.length; i++) {
+    const a = vec1[i];
+    const b = vec2[i];
+
+    dot += a.x * b.x + a.y * b.y;
+    normA += a.x ** 2 + a.y ** 2;
+    normB += b.x ** 2 + b.y ** 2;
+  }
+
+  return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+
+
+
+
+
+
     const camera = new Camera(videoRef.current, {
       onFrame: async () => {
         await faceMesh.send({ image: videoRef.current });
