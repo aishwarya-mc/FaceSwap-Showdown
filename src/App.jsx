@@ -145,6 +145,14 @@ const drawResults = (results) => {
     const normalizedLandmarks = normalizeLandmarks(landmarks);
     console.log("Player 1 vector:", normalizedLandmarks);
 
+
+    if (window.mrBeanVector?.length === 478) {
+  const similarity = computeCosineSimilarity(normalizedLandmarks, window.mrBeanVector);
+  console.log("🔍 Cosine Similarity with Mr. Bean:", similarity.toFixed(4));
+  setSimilarityScore(similarity);
+}
+
+
     drawOverlays(canvasCtx, landmarks);
   }
   canvasCtx.restore();
