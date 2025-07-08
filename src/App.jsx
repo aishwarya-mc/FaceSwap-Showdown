@@ -69,12 +69,12 @@ function App() {
       try {
         await tmpFaceMesh.send({ image: tmpCanvas });
       } catch (error) {
-        console.error("❌ Error analyzing Mr. Bean:", error);
+        console.error("Error analyzing Mr. Bean:", error);
       }
     };
 
     mrBeanImg.onerror = () => {
-      console.error("❌ Failed to load Mr. Bean image");
+      console.error( "Failed to load Mr. Bean image");
     };
 
     const mustacheImg = new Image();
