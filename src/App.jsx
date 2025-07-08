@@ -284,7 +284,7 @@ function computeCosineSimilarity(vec1, vec2) {
   <span className="text-white font-bold text-lg tracking-wide drop-shadow">Player 1</span>
   {similarityScore !== null && (
     <span className="text-green-300 font-mono text-sm tracking-wider drop-shadow">
-      Score: {similarityScore.toFixed(3)}
+      Score: {Math.floor(similarityScore * 100)}
     </span>
   )}
 
@@ -323,7 +323,7 @@ function computeCosineSimilarity(vec1, vec2) {
                     {/* ✅ Display Similarity Score */}
           {similarityScore && (
             <p className="text-center mt-4 text-white text-lg font-semibold tracking-wide bg-gradient-to-r from-green-400 via-yellow-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
-              Similarity Score: {similarityScore}
+              Similarity Score: {(similarityScore * 100).toFixed(2)}
             </p>
           )}
         </div>
