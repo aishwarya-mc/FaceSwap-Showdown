@@ -96,8 +96,8 @@ function App() {
       for (const point of landmarks) {
         ctx.beginPath();
         ctx.arc(point.x * width, point.y * height, 2, 0, 2 * Math.PI);
-        ctx.fillStyle = 'rgba(0,180,255,0.7)';
-        ctx.shadowColor = 'rgba(0,180,255,0.5)';
+        ctx.fillStyle = 'rgba(0,180,255,0.0)';
+        ctx.shadowColor = 'rgba(0,180,255,0.0)';
         ctx.shadowBlur = 4;
         ctx.fill();
         ctx.shadowBlur = 0;
