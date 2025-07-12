@@ -35,7 +35,7 @@ function App() {
     mrBeanImg.src = emojiSurprised;
     
     mrBeanImg.onload = async () => {
-      console.log("🟢 Mr. Bean image loaded, starting analysis...");
+      console.log("Mr. Bean image loaded, starting analysis...");
       const tmpCanvas = document.createElement('canvas');
       tmpCanvas.width = 420;
       tmpCanvas.height = 315;
@@ -58,11 +58,11 @@ function App() {
         if (results.multiFaceLandmarks?.length > 0) {
           const mrBeanLandmarks = results.multiFaceLandmarks[0];
           const normalized = normalizeLandmarks(mrBeanLandmarks);
-          console.log("🟣 Mr. Bean RAW coordinates:", mrBeanLandmarks);
-          console.log("🟣 Mr. Bean NORMALIZED vector:", normalized);
+          console.log(" Mr. Bean RAW coordinates:", mrBeanLandmarks);
+          console.log(" Mr. Bean NORMALIZED vector:", normalized);
           window.mrBeanVector = normalized;
         } else {
-          console.warn("🟡 Mr. Bean face NOT detected in the image.");
+          console.warn("Mr. Bean face NOT detected in the image.");
         }
       });
 
@@ -275,7 +275,7 @@ function computeCosineSimilarity(vec1, vec2) {
   </div>
 </div>
 
-      {/* Main Game Layout */}
+      
       <div className="z-10 flex flex-row items-center justify-center gap-20 w-full max-w-6xl py-10">
 
 
